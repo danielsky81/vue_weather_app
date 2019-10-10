@@ -15,7 +15,7 @@
                 <b-card-text>
                   The current temperature is <strong>{{ dublin_current.temp }}</strong> with <strong>{{ dublin_current.forecast }}</strong>
                 </b-card-text>
-                <b-button v-b-toggle.collapse-dublin variant="outline-info" @click="fetchForecast('7778677')">5 Days Forecast</b-button>
+                <b-button v-b-toggle.accordion-dublin variant="outline-info" @click="fetchForecast('7778677')">5 Days Forecast</b-button>
               </b-card>
             </div>
           </b-col>
@@ -32,7 +32,7 @@
                 <b-card-text>
                   The current temperature is <strong>{{ cork_current.temp }}</strong> with <strong>{{ cork_current.forecast }}</strong>
                 </b-card-text>
-                <b-button v-b-toggle.collapse-cork variant="outline-info" @click="fetchForecast('2965140')">5 Days Forecast</b-button>
+                <b-button v-b-toggle.accordion-cork variant="outline-info" @click="fetchForecast('2965140')">5 Days Forecast</b-button>
               </b-card>
             </div>
           </b-col>
@@ -49,14 +49,14 @@
                 <b-card-text>
                   The current temperature is <strong>{{ galway_current.temp }}</strong> with <strong>{{ galway_current.forecast }}</strong>
                 </b-card-text>
-                <b-button v-b-toggle.collapse-galway variant="outline-info" @click="fetchForecast('2964179')">5 Days Forecast</b-button>
+                <b-button v-b-toggle.accordion-galway variant="outline-info" @click="fetchForecast('2964179')">5 Days Forecast</b-button>
               </b-card>
             </div>
           </b-col>
         </b-row>
         <b-row>
           <b-col sm="12">
-            <b-collapse id="collapse-dublin" class="mt-2">
+            <b-collapse id="accordion-dublin" accordion="my-accordion" class="mt-2">
               <h2 class="mainTitle">Dublin Extended Forecast</h2>
               <b-card :key="item.id" v-for="item in dublin">
                 <p>{{ item.day }} a</p>
@@ -67,7 +67,7 @@
             </b-collapse>
           </b-col>
           <b-col sm="12">
-            <b-collapse id="collapse-cork" class="mt-2">
+            <b-collapse id="accordion-cork" accordion="my-accordion" class="mt-2">
               <h2 class="mainTitle">Cork Extended Forecast</h2>
               <b-card :key="item.id" v-for="item in cork">
                 <p>{{ item.day }} a</p>
@@ -78,7 +78,7 @@
             </b-collapse>
           </b-col>
           <b-col sm="12">
-            <b-collapse id="collapse-galway" class="mt-2">
+            <b-collapse id="accordion-galway" accordion="my-accordion" class="mt-2">
               <h2 class="mainTitle">Galway Extended Forecast</h2>
               <b-card :key="item.id" v-for="item in galway">
                 <p>{{ item.day }} a</p>
@@ -89,6 +89,9 @@
             </b-collapse>
           </b-col>
         </b-row>
+        <div id="scrollTop">
+          <b-button href="#app" variant="outline-primary">Top</b-button>
+        </div>
     </b-container>
   </div>
 </template>
