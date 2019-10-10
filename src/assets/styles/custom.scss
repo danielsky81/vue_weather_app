@@ -1,12 +1,53 @@
+$breakpoint-xsmall: 350px;
+$breakpoint-small: 450px;
+
 .container-fluid {
   padding: 15px;
+  .mainTitle {
+    text-align: center;
+  }
+  div {
+    margin: 10px auto;
+  }
   .btn {
     display: block;
     margin: 15px auto;
   }
-  .card-img-top {
-    height: 100px;
-    width: 100px;
-    margin: 10px auto;
+  .card {
+    margin: auto;
+    .card-img-top {
+      height: 100px;
+      width: 100px;
+      margin: 10px auto;
+    }
+    h4 {
+      color: #17a2b8;
+    }
+  }
+  .collapse .card {
+    border: none;
+    border-top-color: rgba(0, 0, 0, 0.125);
+    border-top-style: solid;
+    border-top-width: 1px;
+    .card-body {
+      padding: 10px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      p, h3 {
+        display: inline-block;
+      }
+      @media (max-width: $breakpoint-small) {
+        p, h3 {
+          font-size: .8em;
+        }
+      }
+      @media (max-width: $breakpoint-xsmall) {
+        p, h3 {
+          font-size: .6em;
+        }
+      }
+    }
   }
 }

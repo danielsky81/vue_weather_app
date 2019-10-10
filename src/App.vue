@@ -2,7 +2,7 @@
   <div id="app">
     <b-container fluid>
         <b-row>
-          <b-col>
+          <b-col sm="12" md="12" lg="4">
             <div>
               <b-card
                 title="DUBLIN"
@@ -15,11 +15,11 @@
                 <b-card-text>
                   The current temperature is <strong>{{ dublin_current.temp }}</strong> with <strong>{{ dublin_current.forecast }}</strong>
                 </b-card-text>
-                <b-button v-b-toggle.collapse-dublin variant="outline-info" @click="fetchForecast('7778677')">Extended Forecast</b-button>
+                <b-button v-b-toggle.collapse-dublin variant="outline-info" @click="fetchForecast('7778677')">5 Days Forecast</b-button>
               </b-card>
             </div>
           </b-col>
-          <b-col>
+          <b-col sm="12" md="6" lg="4">
             <div>
               <b-card
                 title="CORK"
@@ -32,11 +32,11 @@
                 <b-card-text>
                   The current temperature is <strong>{{ cork_current.temp }}</strong> with <strong>{{ cork_current.forecast }}</strong>
                 </b-card-text>
-                <b-button v-b-toggle.collapse-cork variant="outline-info" @click="fetchForecast('2965140')">Cork</b-button>
+                <b-button v-b-toggle.collapse-cork variant="outline-info" @click="fetchForecast('2965140')">5 Days Forecast</b-button>
               </b-card>
             </div>
           </b-col>
-          <b-col>
+          <b-col sm="12" md="12" lg="4">
             <div>
               <b-card
                 title="GALWAY"
@@ -49,45 +49,42 @@
                 <b-card-text>
                   The current temperature is <strong>{{ galway_current.temp }}</strong> with <strong>{{ galway_current.forecast }}</strong>
                 </b-card-text>
-                <b-button v-b-toggle.collapse-galway variant="outline-info" @click="fetchForecast('2964179')">Galway</b-button>
+                <b-button v-b-toggle.collapse-galway variant="outline-info" @click="fetchForecast('2964179')">5 Days Forecast</b-button>
               </b-card>
             </div>
           </b-col>
         </b-row>
         <b-row>
-          <b-col>
+          <b-col sm="12">
             <b-collapse id="collapse-dublin" class="mt-2">
-              <b-card>
-                <ul>
-                  <li :key="item.id" v-for="item in dublin">
-                    <p>{{ item.day }} {{ item.hour }} {{ item.temp }}</p>
-                    <p><img class="img-fluid" :src="item.symbol"></img></p>
-                  </li>
-                </ul>
+              <h2 class="mainTitle">Dublin Extended Forecast</h2>
+              <b-card :key="item.id" v-for="item in dublin">
+                <p>{{ item.day }} a</p>
+                <p>t <strong>{{ item.hour }}:00</strong></p>
+                <p><img class="img-fluid" :src="item.symbol"></img></p>
+                <h3>{{ item.temp }}</h3>
               </b-card>
             </b-collapse>
           </b-col>
-          <b-col>
+          <b-col sm="12">
             <b-collapse id="collapse-cork" class="mt-2">
-              <b-card>
-                <ul>
-                  <li :key="item.id" v-for="item in cork">
-                    <p>{{ item.day }} {{ item.hour }} {{ item.temp }}</p>
-                    <p><img class="img-fluid" :src="item.symbol"></img></p>
-                  </li>
-                </ul>
+              <h2 class="mainTitle">Cork Extended Forecast</h2>
+              <b-card :key="item.id" v-for="item in cork">
+                <p>{{ item.day }} a</p>
+                <p>t <strong>{{ item.hour }}:00</strong></p>
+                <p><img class="img-fluid" :src="item.symbol"></img></p>
+                <h3>{{ item.temp }}</h3>
               </b-card>
             </b-collapse>
           </b-col>
-          <b-col>
+          <b-col sm="12">
             <b-collapse id="collapse-galway" class="mt-2">
-              <b-card>
-                <ul>
-                  <li :key="item.id" v-for="item in galway">
-                    <p>{{ item.day }} {{ item.hour }} {{ item.temp }}</p>
-                    <p><img class="img-fluid" :src="item.symbol"></img></p>
-                  </li>
-                </ul>
+              <h2 class="mainTitle">Galway Extended Forecast</h2>
+              <b-card :key="item.id" v-for="item in galway">
+                <p>{{ item.day }} a</p>
+                <p>t <strong>{{ item.hour }}:00</strong></p>
+                <p><img class="img-fluid" :src="item.symbol"></img></p>
+                <h3>{{ item.temp }}</h3>
               </b-card>
             </b-collapse>
           </b-col>
@@ -119,7 +116,6 @@ export default {
           let url = `https://api.openweathermap.org/data/2.5/weather?id=${city}&units=metric&APPID=74ecf887ea2ee80ab6586f67dfe5ee24`
           this.$http.get(url)
             .then(response => {
-              console.log(response);
               let data = response.data;
               let output = {
                 temp: `${Math.round(data.main.temp).toString()} \u00B0C`,
