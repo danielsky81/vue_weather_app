@@ -2,50 +2,95 @@
   <div id="app">
     <b-container fluid>
         <b-row>
-            <b-col>
-              <b-row>
-                <b-col>
-                  <!-- <img class="img-fluid" :src="dublin[symbol]"></img> -->
-                  <b-button v-b-toggle.collapse-dublin variant="outline-info" @click="fetchForecast('7778677')">Dublin</b-button>
-                  <b-collapse id="collapse-dublin" class="mt-2">
-                    <b-card>
-                      <ul>
-                        <li :key="item.id" v-for="item in dublin">
-                          <p>{{ item.day }} {{ item.hour }} {{ item.temp }}</p>
-                          <p><img class="img-fluid" :src="item.symbol"></img></p>
-                        </li>
-                      </ul>
-                    </b-card>
-                  </b-collapse>
-                </b-col>
-                <b-col>
-                  <b-button v-b-toggle.collapse-cork variant="outline-info" @click="fetchForecast('2965140')">Cork</b-button>
-                  <b-collapse id="collapse-cork" class="mt-2">
-                    <b-card>
-                      <ul>
-                        <li :key="item.id" v-for="item in cork">
-                          <p>{{ item.day }} {{ item.hour }} {{ item.temp }}</p>
-                          <p><img class="img-fluid" :src="item.symbol"></img></p>
-                        </li>
-                      </ul>
-                    </b-card>
-                  </b-collapse>
-                </b-col>
-                <b-col>
-                  <b-button v-b-toggle.collapse-galway variant="outline-info" @click="fetchForecast('2964179')">Galway</b-button>
-                  <b-collapse id="collapse-galway" class="mt-2">
-                    <b-card>
-                      <ul>
-                        <li :key="item.id" v-for="item in galway">
-                          <p>{{ item.day }} {{ item.hour }} {{ item.temp }}</p>
-                          <p><img class="img-fluid" :src="item.symbol"></img></p>
-                        </li>
-                      </ul>
-                    </b-card>
-                  </b-collapse>
-                </b-col>
-              </b-row>
-            </b-col>
+          <b-col>
+            <div>
+              <b-card
+                title="DUBLIN"
+                :img-src="dublin_current.symbol"
+                img-alt="Current weather status"
+                img-top
+                tag="article"
+                style="max-width: 20rem;"
+                class="mb-2">
+                <b-card-text>
+                  The current temperature is <strong>{{ dublin_current.temp }}</strong> with <strong>{{ dublin_current.forecast }}</strong>
+                </b-card-text>
+                <b-button v-b-toggle.collapse-dublin variant="outline-info" @click="fetchForecast('7778677')">Extended Forecast</b-button>
+              </b-card>
+            </div>
+          </b-col>
+          <b-col>
+            <div>
+              <b-card
+                title="CORK"
+                :img-src="cork_current.symbol"
+                img-alt="Current weather status"
+                img-top
+                tag="article"
+                style="max-width: 20rem;"
+                class="mb-2">
+                <b-card-text>
+                  The current temperature is <strong>{{ cork_current.temp }}</strong> with <strong>{{ cork_current.forecast }}</strong>
+                </b-card-text>
+                <b-button v-b-toggle.collapse-cork variant="outline-info" @click="fetchForecast('2965140')">Cork</b-button>
+              </b-card>
+            </div>
+          </b-col>
+          <b-col>
+            <div>
+              <b-card
+                title="GALWAY"
+                :img-src="galway_current.symbol"
+                img-alt="Current weather status"
+                img-top
+                tag="article"
+                style="max-width: 20rem;"
+                class="mb-2">
+                <b-card-text>
+                  The current temperature is <strong>{{ galway_current.temp }}</strong> with <strong>{{ galway_current.forecast }}</strong>
+                </b-card-text>
+                <b-button v-b-toggle.collapse-galway variant="outline-info" @click="fetchForecast('2964179')">Galway</b-button>
+              </b-card>
+            </div>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col>
+            <b-collapse id="collapse-dublin" class="mt-2">
+              <b-card>
+                <ul>
+                  <li :key="item.id" v-for="item in dublin">
+                    <p>{{ item.day }} {{ item.hour }} {{ item.temp }}</p>
+                    <p><img class="img-fluid" :src="item.symbol"></img></p>
+                  </li>
+                </ul>
+              </b-card>
+            </b-collapse>
+          </b-col>
+          <b-col>
+            <b-collapse id="collapse-cork" class="mt-2">
+              <b-card>
+                <ul>
+                  <li :key="item.id" v-for="item in cork">
+                    <p>{{ item.day }} {{ item.hour }} {{ item.temp }}</p>
+                    <p><img class="img-fluid" :src="item.symbol"></img></p>
+                  </li>
+                </ul>
+              </b-card>
+            </b-collapse>
+          </b-col>
+          <b-col>
+            <b-collapse id="collapse-galway" class="mt-2">
+              <b-card>
+                <ul>
+                  <li :key="item.id" v-for="item in galway">
+                    <p>{{ item.day }} {{ item.hour }} {{ item.temp }}</p>
+                    <p><img class="img-fluid" :src="item.symbol"></img></p>
+                  </li>
+                </ul>
+              </b-card>
+            </b-collapse>
+          </b-col>
         </b-row>
     </b-container>
   </div>
@@ -56,13 +101,47 @@ export default {
   name: 'app',
   data() {
         return {
-          fields: ['day', 'hour', 'temp', 'forecast'],
+          dublin_current: '',
+          cork_current: '',
+          galway_current: '',
           dublin: '',
           cork: '',
           galway: ''
         };
       },
+      created() {
+        this.dublin_current = this.fetchWeather(7778677);
+        this.cork_current = this.fetchWeather(2965140);
+        this.galway_current = this.fetchWeather(2964179);
+      },
       methods: {
+        fetchWeather(city) {
+          let url = `https://api.openweathermap.org/data/2.5/weather?id=${city}&units=metric&APPID=74ecf887ea2ee80ab6586f67dfe5ee24`
+          this.$http.get(url)
+            .then(response => {
+              console.log(response);
+              let data = response.data;
+              let output = {
+                temp: `${Math.round(data.main.temp).toString()} \u00B0C`,
+                forecast: data.weather[0].description,
+                symbol: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+              }
+              if (city == '7778677') {
+                this.dublin_current = output;
+              } else if (city == '2965140') {
+                this.cork_current = output;
+              } else if (city == '2964179') {
+                this.galway_current = output;
+              }
+            })
+            .then(data => {
+              let output = {
+                temp: `${Math.round(data.main.temp).toString()} \u00B0C`,
+                forecast: data.weather[0].description,
+                symbol: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+              }
+            });
+        },
         fetchForecast(city) {
           let url = `https://api.openweathermap.org/data/2.5/forecast?id=${city}&units=metric&APPID=74ecf887ea2ee80ab6586f67dfe5ee24`
           this.$http.get(url)
