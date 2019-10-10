@@ -4,6 +4,8 @@
 
 ## Build Setup
 
+Initial Steps
+
 ``` bash
 # install dependencies
 npm install
@@ -15,4 +17,12 @@ npm run dev
 npm run build
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Additional packages
+
+``` bash
+# plugin for making web requests and responses
+npm install -- save vue-resource
+
+# bootstrap 4 plugin
+npm install --save bootstrap-vue bootstrap
+```
