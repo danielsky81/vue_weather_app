@@ -26,3 +26,5 @@ npm install -- save vue-resource
 # bootstrap 4 plugin
 npm install --save bootstrap-vue bootstrap
 ```
+
+The app has been deployed to Amazon S3 and can be viewed [here](http://vue-weather-app.s3-website-eu-west-1.amazonaws.com/)

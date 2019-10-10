@@ -175,9 +175,11 @@ export default {
             });
         },
         scrollMeTo(refName) {
+          let element = this.$refs[refName];
+          let top = element.offsetTop;
           if (window.innerWidth < 992) {
-            let element = this.$refs[refName];
-            let top = element.offsetTop;
+            window.scrollTo(0, top);
+          } else if (refName == 'top') {
             window.scrollTo(0, top);
           }
         }
