@@ -1,97 +1,97 @@
 <template>
   <div id="app">
     <b-container fluid>
-        <b-row>
-          <b-col sm="12" md="12" lg="4">
-            <div>
-              <b-card
-                title="DUBLIN"
-                :img-src="dublin_current.symbol"
-                img-alt="Current weather status"
-                img-top
-                tag="article"
-                style="max-width: 20rem;"
-                class="mb-2">
-                <b-card-text>
-                  The current temperature is <strong>{{ dublin_current.temp }}</strong> with <strong>{{ dublin_current.forecast }}</strong>
-                </b-card-text>
-                <b-button v-b-toggle.accordion-dublin variant="outline-info" @click="fetchForecast('7778677')">5 Days Forecast</b-button>
-              </b-card>
-            </div>
-          </b-col>
-          <b-col sm="12" md="6" lg="4">
-            <div>
-              <b-card
-                title="CORK"
-                :img-src="cork_current.symbol"
-                img-alt="Current weather status"
-                img-top
-                tag="article"
-                style="max-width: 20rem;"
-                class="mb-2">
-                <b-card-text>
-                  The current temperature is <strong>{{ cork_current.temp }}</strong> with <strong>{{ cork_current.forecast }}</strong>
-                </b-card-text>
-                <b-button v-b-toggle.accordion-cork variant="outline-info" @click="fetchForecast('2965140')">5 Days Forecast</b-button>
-              </b-card>
-            </div>
-          </b-col>
-          <b-col sm="12" md="12" lg="4">
-            <div>
-              <b-card
-                title="GALWAY"
-                :img-src="galway_current.symbol"
-                img-alt="Current weather status"
-                img-top
-                tag="article"
-                style="max-width: 20rem;"
-                class="mb-2">
-                <b-card-text>
-                  The current temperature is <strong>{{ galway_current.temp }}</strong> with <strong>{{ galway_current.forecast }}</strong>
-                </b-card-text>
-                <b-button v-b-toggle.accordion-galway variant="outline-info" @click="fetchForecast('2964179')">5 Days Forecast</b-button>
-              </b-card>
-            </div>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col sm="12">
-            <b-collapse id="accordion-dublin" accordion="my-accordion" class="mt-2">
-              <h2 class="mainTitle">Dublin Extended Forecast</h2>
-              <b-card :key="item.id" v-for="item in dublin">
-                <p>{{ item.day }} a</p>
-                <p>t <strong>{{ item.hour }}:00</strong></p>
-                <p><img class="img-fluid" :src="item.symbol"></img></p>
-                <h3>{{ item.temp }}</h3>
-              </b-card>
-            </b-collapse>
-          </b-col>
-          <b-col sm="12">
-            <b-collapse id="accordion-cork" accordion="my-accordion" class="mt-2">
-              <h2 class="mainTitle">Cork Extended Forecast</h2>
-              <b-card :key="item.id" v-for="item in cork">
-                <p>{{ item.day }} a</p>
-                <p>t <strong>{{ item.hour }}:00</strong></p>
-                <p><img class="img-fluid" :src="item.symbol"></img></p>
-                <h3>{{ item.temp }}</h3>
-              </b-card>
-            </b-collapse>
-          </b-col>
-          <b-col sm="12">
-            <b-collapse id="accordion-galway" accordion="my-accordion" class="mt-2">
-              <h2 class="mainTitle">Galway Extended Forecast</h2>
-              <b-card :key="item.id" v-for="item in galway">
-                <p>{{ item.day }} a</p>
-                <p>t <strong>{{ item.hour }}:00</strong></p>
-                <p><img class="img-fluid" :src="item.symbol"></img></p>
-                <h3>{{ item.temp }}</h3>
-              </b-card>
-            </b-collapse>
-          </b-col>
-        </b-row>
-        <div id="scrollTop">
-          <b-button href="#app" variant="outline-primary">Top</b-button>
-        </div>
+      <b-row>
+        <b-col sm="12" md="12" lg="4">
+          <div ref="top">
+            <b-card
+              title="DUBLIN"
+              :img-src="dublin_current.symbol"
+              img-alt="Current weather status"
+              img-top
+              tag="article"
+              style="max-width: 20rem;"
+              class="mb-2">
+              <b-card-text>
+                The current temperature is <strong>{{ dublin_current.temp }}</strong> with <strong>{{ dublin_current.forecast }}</strong>
+              </b-card-text>
+              <b-button v-b-toggle.accordion-dublin variant="outline-info" @click="fetchForecast('7778677'); scrollMeTo('dublin')">5 Days Forecast</b-button>
+            </b-card>
+          </div>
+        </b-col>
+        <b-col sm="12" md="6" lg="4">
+          <div>
+            <b-card
+              title="CORK"
+              :img-src="cork_current.symbol"
+              img-alt="Current weather status"
+              img-top
+              tag="article"
+              style="max-width: 20rem;"
+              class="mb-2">
+              <b-card-text>
+                The current temperature is <strong>{{ cork_current.temp }}</strong> with <strong>{{ cork_current.forecast }}</strong>
+              </b-card-text>
+              <b-button v-b-toggle.accordion-cork variant="outline-info" @click="fetchForecast('2965140'); scrollMeTo('cork')">5 Days Forecast</b-button>
+            </b-card>
+          </div>
+        </b-col>
+        <b-col sm="12" md="12" lg="4">
+          <div>
+            <b-card
+              title="GALWAY"
+              :img-src="galway_current.symbol"
+              img-alt="Current weather status"
+              img-top
+              tag="article"
+              style="max-width: 20rem;"
+              class="mb-2">
+              <b-card-text>
+                The current temperature is <strong>{{ galway_current.temp }}</strong> with <strong>{{ galway_current.forecast }}</strong>
+              </b-card-text>
+              <b-button v-b-toggle.accordion-galway variant="outline-info" @click="fetchForecast('2964179'); scrollMeTo('galway')">5 Days Forecast</b-button>
+            </b-card>
+          </div>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col sm="12" ref="dublin">
+          <b-collapse id="accordion-dublin" accordion="my-accordion" class="mt-2">
+            <h2 class="mainTitle">Dublin Extended Forecast</h2>
+            <b-card :key="item.id" v-for="item in dublin">
+              <p>{{ item.day }} a</p>
+              <p>t <strong>{{ item.hour }}:00</strong></p>
+              <p><img class="img-fluid" :src="item.symbol"></img></p>
+              <h3>{{ item.temp }}</h3>
+            </b-card>
+          </b-collapse>
+        </b-col>
+        <b-col sm="12" ref="cork">
+          <b-collapse id="accordion-cork" accordion="my-accordion" class="mt-2">
+            <h2 class="mainTitle">Cork Extended Forecast</h2>
+            <b-card :key="item.id" v-for="item in cork">
+              <p>{{ item.day }} a</p>
+              <p>t <strong>{{ item.hour }}:00</strong></p>
+              <p><img class="img-fluid" :src="item.symbol"></img></p>
+              <h3>{{ item.temp }}</h3>
+            </b-card>
+          </b-collapse>
+        </b-col>
+        <b-col sm="12" ref="galway">
+          <b-collapse id="accordion-galway" accordion="my-accordion" class="mt-2">
+            <h2 class="mainTitle">Galway Extended Forecast</h2>
+            <b-card :key="item.id" v-for="item in galway">
+              <p>{{ item.day }} a</p>
+              <p>t <strong>{{ item.hour }}:00</strong></p>
+              <p><img class="img-fluid" :src="item.symbol"></img></p>
+              <h3>{{ item.temp }}</h3>
+            </b-card>
+          </b-collapse>
+        </b-col>
+      </b-row>
+      <div id="scrollTop">
+        <b-button variant="outline-primary" @click="scrollMeTo('top')">Top</b-button>
+      </div>
     </b-container>
   </div>
 </template>
@@ -173,6 +173,13 @@ export default {
                 this.galway = selection;
               }
             });
+        },
+        scrollMeTo(refName) {
+          if (window.innerWidth < 992) {
+            let element = this.$refs[refName];
+            let top = element.offsetTop;
+            window.scrollTo(0, top);
+          }
         }
       }
     }
